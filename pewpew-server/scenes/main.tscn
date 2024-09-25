@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://b7ml570yquhj2"]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_5jsfo"]
+[ext_resource type="Script" path="res://scripts/room_handler.gd" id="2_66s0g"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_5jsfo")
+
+[node name="Scene" type="Node" parent="."]
+
+[node name="Room Handler" type="Node" parent="Scene"]
+script = ExtResource("2_66s0g")

@@ -1,0 +1,214 @@
+[gd_scene load_steps=15 format=3 uid="uid://cuee081b0ptvm"]
+
+[ext_resource type="Script" path="res://scripts/game_room.gd" id="1_hpl24"]
+[ext_resource type="Script" path="res://scripts/camera_follow.gd" id="2_71j8f"]
+[ext_resource type="Texture2D" uid="uid://b6iem24aic3fj" path="res://textures/starry_night.png" id="3_sbiqx"]
+[ext_resource type="Script" path="res://scripts/game_area.gd" id="3_x60lw"]
+[ext_resource type="Script" path="res://scripts/border_sprite.gd" id="6_c1agi"]
+[ext_resource type="Texture2D" uid="uid://dym3bw7v125f6" path="res://textures/starry_night_nobackground_.png" id="7_3uoty"]
+[ext_resource type="Script" path="res://scripts/parrallax_stars.gd" id="8_8nvd3"]
+[ext_resource type="Script" path="res://scripts/pause_menu.gd" id="8_b2vcu"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_fjbop"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_vaaru"]
+
+[sub_resource type="Gradient" id="Gradient_85vjm"]
+offsets = PackedFloat32Array(0, 0.549645, 1)
+colors = PackedColorArray(0.482209, 0.649374, 0.744931, 0, 0.1, 0.22, 1, 0.290196, 0.15552, 0.573194, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_v8tyi"]
+gradient = SubResource("Gradient_85vjm")
+width = 16
+height = 128
+fill_from = Vector2(0.545455, 1)
+fill_to = Vector2(0.545455, 0)
+metadata/_snap_enabled = true
+metadata/_snap_count = 11
+
+[sub_resource type="Shader" id="Shader_shhnv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y4o04"]
+render_priority = 0
+shader = SubResource("Shader_shhnv")
+
+[node name="Game Room" type="Node2D"]
+script = ExtResource("1_hpl24")
+
+[node name="Camera" type="Camera2D" parent="."]
+unique_name_in_owner = true
+limit_left = -5000
+limit_top = -5000
+limit_right = 5000
+limit_bottom = 5000
+position_smoothing_speed = 3.0
+editor_draw_screen = false
+script = ExtResource("2_71j8f")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+material = SubResource("CanvasItemMaterial_fjbop")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5000.0
+offset_top = -5000.0
+offset_right = 5000.0
+offset_bottom = 5000.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Game Area" type="Node2D" parent="."]
+texture_filter = 5
+script = ExtResource("3_x60lw")
+game_area_size = Vector2(10000, 10000)
+
+[node name="Background" type="Polygon2D" parent="Game Area"]
+self_modulate = Color(0.751461, 0.751461, 0.751461, 1)
+z_index = -100
+texture_repeat = 2
+texture = ExtResource("3_sbiqx")
+polygon = PackedVector2Array(500, 500, 500, -500, -500, -500, -500, 500)
+
+[node name="Variation stars" type="Polygon2D" parent="Game Area"]
+modulate = Color(0.788607, 0.788607, 0.788607, 1)
+self_modulate = Color(0.751461, 0.751461, 0.751461, 1)
+z_index = -100
+texture_repeat = 2
+texture = ExtResource("7_3uoty")
+texture_scale = Vector2(0.535, 0.535)
+polygon = PackedVector2Array(500, 500, 500, -500, -500, -500, -500, 500)
+script = ExtResource("8_8nvd3")
+follow_amount = 0.0
+
+[node name="Variation stars2" type="Polygon2D" parent="Game Area"]
+modulate = Color(0.788607, 0.788607, 0.788607, 1)
+self_modulate = Color(0.751461, 0.751461, 0.751461, 1)
+z_index = -100
+texture_repeat = 2
+texture = ExtResource("7_3uoty")
+texture_scale = Vector2(-1.305, 1.305)
+polygon = PackedVector2Array(500, 500, 500, -500, -500, -500, -500, 500)
+script = ExtResource("8_8nvd3")
+follow_amount = 0.0
+
+[node name="Border Body" type="StaticBody2D" parent="Game Area"]
+collision_layer = 3
+
+[node name="Bot" type="CollisionShape2D" parent="Game Area/Border Body"]
+position = Vector2(0, 100)
+shape = SubResource("WorldBoundaryShape2D_vaaru")
+
+[node name="Sprite2D" type="Sprite2D" parent="Game Area/Border Body/Bot"]
+z_index = -80
+rotation = -3.14159
+scale = Vector2(12.5, 0.145)
+texture = SubResource("GradientTexture2D_v8tyi")
+offset = Vector2(0, 64)
+script = ExtResource("6_c1agi")
+
+[node name="Top" type="CollisionShape2D" parent="Game Area/Border Body"]
+position = Vector2(0, -100)
+rotation = 3.14159
+shape = SubResource("WorldBoundaryShape2D_vaaru")
+
+[node name="Sprite2D" type="Sprite2D" parent="Game Area/Border Body/Top"]
+z_index = -80
+rotation = -3.14159
+scale = Vector2(12.5, 0.145)
+texture = SubResource("GradientTexture2D_v8tyi")
+offset = Vector2(0, 64)
+script = ExtResource("6_c1agi")
+
+[node name="Left" type="CollisionShape2D" parent="Game Area/Border Body"]
+position = Vector2(-100, 0)
+rotation = 1.5708
+shape = SubResource("WorldBoundaryShape2D_vaaru")
+
+[node name="Sprite2D" type="Sprite2D" parent="Game Area/Border Body/Left"]
+z_index = -80
+rotation = -3.14159
+scale = Vector2(12.5, 0.145)
+texture = SubResource("GradientTexture2D_v8tyi")
+offset = Vector2(0, 64)
+script = ExtResource("6_c1agi")
+
+[node name="Right" type="CollisionShape2D" parent="Game Area/Border Body"]
+position = Vector2(100, 0)
+rotation = -1.5708
+shape = SubResource("WorldBoundaryShape2D_vaaru")
+
+[node name="Sprite2D" type="Sprite2D" parent="Game Area/Border Body/Right"]
+z_index = -80
+rotation = -3.14159
+scale = Vector2(12.5, 0.145)
+texture = SubResource("GradientTexture2D_v8tyi")
+offset = Vector2(0, 64)
+script = ExtResource("6_c1agi")
+
+[node name="Far Stars" type="Polygon2D" parent="Game Area"]
+modulate = Color(0.788607, 0.788607, 0.788607, 1)
+self_modulate = Color(0.751461, 0.751461, 0.751461, 1)
+z_index = -100
+texture_repeat = 2
+color = Color(0.65834, 0.65834, 0.65834, 1)
+texture = ExtResource("7_3uoty")
+texture_scale = Vector2(1.26, -1.26)
+polygon = PackedVector2Array(500, 500, 500, -500, -500, -500, -500, 500)
+script = ExtResource("8_8nvd3")
+follow_amount = 0.11
+
+[node name="Far Stars2" type="Polygon2D" parent="Game Area"]
+modulate = Color(0.788607, 0.788607, 0.788607, 1)
+self_modulate = Color(0.751461, 0.751461, 0.751461, 1)
+z_index = -100
+texture_repeat = 2
+color = Color(0.389287, 0.389287, 0.389286, 1)
+texture = ExtResource("7_3uoty")
+texture_scale = Vector2(-1.57, 1.57)
+polygon = PackedVector2Array(500, 500, 500, -500, -500, -500, -500, 500)
+script = ExtResource("8_8nvd3")
+follow_amount = 0.3
+
+[node name="Far Stars3" type="Polygon2D" parent="Game Area"]
+modulate = Color(0.788607, 0.788607, 0.788607, 1)
+self_modulate = Color(0.751461, 0.751461, 0.751461, 1)
+z_index = -100
+texture_repeat = 2
+color = Color(0.273142, 0.273142, 0.273142, 1)
+texture = ExtResource("7_3uoty")
+texture_scale = Vector2(-1.8, 1.8)
+polygon = PackedVector2Array(500, 500, 500, -500, -500, -500, -500, 500)
+script = ExtResource("8_8nvd3")
+follow_amount = 0.5
+
+[node name="Pause Menu" type="CanvasLayer" parent="."]
+visible = false
+script = ExtResource("8_b2vcu")
+
+[node name="ColorRect" type="ColorRect" parent="Pause Menu"]
+material = SubResource("ShaderMaterial_y4o04")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.721569)
+
+[node name="Leave" type="Button" parent="Pause Menu"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -315.5
+offset_top = -32.0
+offset_right = 315.5
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "leave"
+
+[connection signal="pressed" from="Pause Menu/Leave" to="." method="_on_leave_pressed"]

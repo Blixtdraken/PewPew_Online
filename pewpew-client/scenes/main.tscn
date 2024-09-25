@@ -1,0 +1,111 @@
+[gd_scene load_steps=10 format=3 uid="uid://dkku7gk8sm808"]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_387bm"]
+[ext_resource type="PackedScene" uid="uid://drcst2mqllvfv" path="res://scenes/menus/start_menu.tscn" id="1_yt6dy"]
+[ext_resource type="Script" path="res://scripts/debug label.gd" id="3_1q1wi"]
+[ext_resource type="Script" path="res://scripts/fps-limiter.gd" id="5_cwsgm"]
+[ext_resource type="Script" path="res://scripts/fps_debug.gd" id="5_oxq2l"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ll3fg"]
+font_color = Color(1, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_8pyna"]
+font_color = Color(1, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_v47on"]
+font_color = Color(1, 1, 0, 1)
+
+[sub_resource type="Environment" id="Environment_ktlak"]
+background_mode = 3
+glow_enabled = true
+glow_intensity = 8.0
+glow_bloom = 0.1
+
+[node name="Main" type="Node"]
+script = ExtResource("1_387bm")
+
+[node name="Scene" type="Node" parent="."]
+
+[node name="Start Menu" parent="Scene" instance=ExtResource("1_yt6dy")]
+
+[node name="Debug UI" type="CanvasLayer" parent="."]
+follow_viewport_scale = 970.848
+
+[node name="Debug Menu" type="Control" parent="Debug UI"]
+process_priority = -1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="Debug UI/Debug Menu"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -168.0
+offset_right = -16.0
+offset_bottom = 26.0
+grow_horizontal = 0
+text = "ID: n/a"
+label_settings = SubResource("LabelSettings_ll3fg")
+horizontal_alignment = 3
+script = ExtResource("3_1q1wi")
+
+[node name="FPS Label" type="Label" parent="Debug UI/Debug Menu"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -168.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = 42.0
+grow_horizontal = 0
+text = "FPS: -1"
+label_settings = SubResource("LabelSettings_8pyna")
+horizontal_alignment = 3
+script = ExtResource("5_oxq2l")
+
+[node name="Vel Label" type="Label" parent="Debug UI/Debug Menu"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -168.0
+offset_top = 33.0
+offset_right = -16.0
+offset_bottom = 59.0
+grow_horizontal = 0
+text = "Vel: N/A"
+label_settings = SubResource("LabelSettings_v47on")
+horizontal_alignment = 3
+
+[node name="CheckButton" type="CheckButton" parent="Debug UI/Debug Menu"]
+layout_mode = 0
+offset_right = 44.0
+offset_bottom = 24.0
+script = ExtResource("5_cwsgm")
+
+[node name="ColorRect" type="ColorRect" parent="Debug UI/Debug Menu"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5.0
+offset_top = -5.0
+offset_right = 5.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ktlak")
+
+[connection signal="toggled" from="Debug UI/Debug Menu/CheckButton" to="Debug UI/Debug Menu/CheckButton" method="_on_toggled"]

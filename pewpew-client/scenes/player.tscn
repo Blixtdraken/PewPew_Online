@@ -1,0 +1,131 @@
+[gd_scene load_steps=14 format=3 uid="uid://b77fxwrp0q7t1"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_sjcll"]
+[ext_resource type="Script" path="res://scripts/inverse_rotation.gd" id="2_qoowp"]
+[ext_resource type="Script" path="res://scripts/player_sprites.gd" id="4_don2s"]
+[ext_resource type="Texture2D" uid="uid://cpfb2p6yosuh" path="res://textures/player/player_shell.png" id="4_y3u62"]
+[ext_resource type="Texture2D" uid="uid://emlawk1ne7qh" path="res://textures/player/player_main.png" id="6_45cq4"]
+[ext_resource type="Texture2D" uid="uid://ce3rqpe2d1srf" path="res://textures/player/player_second.png" id="7_erw3i"]
+
+[sub_resource type="Shader" id="Shader_signg"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x7amr"]
+render_priority = 0
+shader = SubResource("Shader_signg")
+
+[sub_resource type="Gradient" id="Gradient_acsi1"]
+colors = PackedColorArray(1, 0, 1, 1, 1, 0, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bqcoo"]
+gradient = SubResource("Gradient_acsi1")
+width = 612
+height = 512
+
+[sub_resource type="LabelSettings" id="LabelSettings_gebx0"]
+font_color = Color(1, 1, 1, 0.811765)
+
+[sub_resource type="Gradient" id="Gradient_1x55e"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.65343)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3k3ov"]
+gradient = SubResource("Gradient_1x55e")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.471795, 0.446154)
+
+[node name="Player" type="CharacterBody2D"]
+collision_mask = 3
+wall_min_slide_angle = 3.14159
+script = ExtResource("1_sjcll")
+ignore_inout_without_focus = false
+acceleration = 1.2
+max_speed = 1100.0
+break_force = 3.0
+
+[node name="Ship" type="Polygon2D" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_x7amr")
+color = Color(0.919326, 0.84855, 1, 1)
+texture = SubResource("GradientTexture2D_bqcoo")
+texture_offset = Vector2(256, 256)
+invert_border = 70.5
+polygon = PackedVector2Array(0, -32, -24, 32, 0, 24, 24, 32)
+uv = PackedVector2Array(0, -32, -24, 32, 0, 24, 24, 32)
+
+[node name="Outline" type="Polygon2D" parent="Ship"]
+visible = false
+z_index = -1
+color = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(0, -40, -28, 36, 0, 28, 28, 36)
+
+[node name="Nickname" type="Label" parent="."]
+z_index = 20
+offset_left = -80.0
+offset_top = -72.0
+offset_right = 80.0
+offset_bottom = -48.0
+pivot_offset = Vector2(80, 72)
+text = "nickname"
+label_settings = SubResource("LabelSettings_gebx0")
+horizontal_alignment = 1
+script = ExtResource("2_qoowp")
+
+[node name="Sync Timer" type="Timer" parent="."]
+wait_time = 0.01
+
+[node name="Sprites" type="CanvasModulate" parent="."]
+z_index = 1
+scale = Vector2(5, 5)
+script = ExtResource("4_don2s")
+
+[node name="Main" type="Sprite2D" parent="Sprites"]
+texture_filter = 1
+texture = ExtResource("6_45cq4")
+
+[node name="Secondary" type="Sprite2D" parent="Sprites"]
+texture_filter = 1
+use_parent_material = true
+texture = ExtResource("7_erw3i")
+
+[node name="Shell" type="Sprite2D" parent="Sprites"]
+texture_filter = 1
+use_parent_material = true
+texture = ExtResource("4_y3u62")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+visible = false
+position = Vector2(0, 48)
+color = Color(0.950733, 0.468826, 0, 1)
+texture = SubResource("GradientTexture2D_3k3ov")
+
+[node name="Hitbox" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-8, -40, 8, -40, 32, 24, 32, 40, -32, 40, -32, 24)
+
+[node name="Laser Cooldown" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="Score Label" type="Label" parent="."]
+z_index = 20
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -53.0
+offset_top = 50.0
+offset_right = 53.0
+offset_bottom = 70.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(53, -50)
+text = "N/A"
+label_settings = SubResource("LabelSettings_gebx0")
+horizontal_alignment = 1
+script = ExtResource("2_qoowp")
+
+[connection signal="timeout" from="Sync Timer" to="." method="_sync_timer_timeout"]
+[connection signal="timeout" from="Laser Cooldown" to="." method="_laser_cooled_down"]

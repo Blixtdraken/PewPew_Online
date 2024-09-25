@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://l8sk64rjjy4"]
+
+[ext_resource type="Script" path="res://scripts/game_room.gd" id="1_ktju4"]
+
+[node name="Game Room" type="Node"]
+script = ExtResource("1_ktju4")

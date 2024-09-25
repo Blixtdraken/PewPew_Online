@@ -1,0 +1,245 @@
+[gd_scene load_steps=11 format=3 uid="uid://bcu5wk1ctyb70"]
+
+[ext_resource type="Script" path="res://scripts/room_request_menu.gd" id="1_1j3of"]
+[ext_resource type="Script" path="res://scripts/player_sprites.gd" id="2_gaye2"]
+[ext_resource type="Texture2D" uid="uid://cpfb2p6yosuh" path="res://textures/player/player_shell.png" id="5_36v8d"]
+[ext_resource type="Texture2D" uid="uid://emlawk1ne7qh" path="res://textures/player/player_main.png" id="6_g68aw"]
+[ext_resource type="Texture2D" uid="uid://b6iem24aic3fj" path="res://textures/starry_night.png" id="6_nhdoc"]
+[ext_resource type="Texture2D" uid="uid://ce3rqpe2d1srf" path="res://textures/player/player_second.png" id="7_ek1es"]
+[ext_resource type="Script" path="res://scripts/offset_animate.gd" id="7_fuxb6"]
+[ext_resource type="Texture2D" uid="uid://dym3bw7v125f6" path="res://textures/starry_night_nobackground_.png" id="8_lt3hn"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_60tp1"]
+font_size = 35
+
+[sub_resource type="LabelSettings" id="LabelSettings_b3sac"]
+font_size = 20
+
+[node name="Room Request Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1j3of")
+
+[node name="Code Field" type="LineEdit" parent="."]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 127.0
+offset_top = 103.0
+offset_right = -129.0
+offset_bottom = 134.0
+grow_horizontal = 2
+grow_vertical = 2
+placeholder_text = "gamecode... (a-z, 0-9)"
+max_length = 12
+clear_button_enabled = true
+
+[node name="Host Button" type="Button" parent="Code Field"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 34.0
+offset_right = 336.0
+offset_bottom = 162.0
+grow_vertical = 0
+text = "Host"
+
+[node name="Join Button" type="Button" parent="Code Field"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -304.0
+offset_top = 34.0
+offset_right = 16.0
+offset_bottom = 162.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Join
+"
+
+[node name="Status Label" type="Label" parent="Code Field"]
+modulate = Color(1, 0, 0, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 8.613
+offset_left = -128.0
+offset_top = 193.0
+offset_right = 144.0
+offset_bottom = 29.997
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_60tp1")
+horizontal_alignment = 1
+
+[node name="Ship Color" type="ColorPicker" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -242.0
+offset_top = 23.0
+offset_right = 56.0
+offset_bottom = 295.0
+grow_horizontal = 2
+scale = Vector2(0.69, 0.69)
+edit_alpha = false
+can_add_swatches = false
+sampler_visible = false
+color_modes_visible = false
+sliders_visible = false
+hex_visible = false
+presets_visible = false
+
+[node name="Ship Color 2" type="ColorPicker" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 43.0
+offset_top = 29.0
+offset_right = 341.0
+offset_bottom = 301.0
+grow_horizontal = 2
+scale = Vector2(0.69, 0.69)
+edit_alpha = false
+can_add_swatches = false
+sampler_visible = false
+color_modes_visible = false
+sliders_visible = false
+hex_visible = false
+presets_visible = false
+
+[node name="Sprites" type="Control" parent="."]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 6.10352e-05
+offset_top = 165.0
+offset_right = 6.10352e-05
+offset_bottom = 165.0
+grow_horizontal = 2
+scale = Vector2(5, 5)
+script = ExtResource("2_gaye2")
+
+[node name="Shell" type="Sprite2D" parent="Sprites"]
+z_index = 2
+use_parent_material = true
+texture = ExtResource("5_36v8d")
+
+[node name="Main" type="Sprite2D" parent="Sprites"]
+texture = ExtResource("6_g68aw")
+
+[node name="Secondary" type="Sprite2D" parent="Sprites"]
+z_index = 1
+use_parent_material = true
+texture = ExtResource("7_ek1es")
+
+[node name="Ship Color Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -60.0
+offset_right = 106.0
+offset_bottom = 42.0
+grow_horizontal = 2
+text = "Ship Color"
+label_settings = SubResource("LabelSettings_b3sac")
+
+[node name="Main Color Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -242.0
+offset_top = 214.0
+offset_right = -76.0
+offset_bottom = 256.0
+grow_horizontal = 2
+text = "Main Color"
+label_settings = SubResource("LabelSettings_b3sac")
+
+[node name="Second Color Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 46.0
+offset_top = 218.0
+offset_right = 295.0
+offset_bottom = 260.0
+grow_horizontal = 2
+text = "Secondary Color"
+label_settings = SubResource("LabelSettings_b3sac")
+
+[node name="Nickname" type="LineEdit" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 127.0
+offset_top = 24.0
+offset_right = 447.0
+offset_bottom = 55.0
+grow_vertical = 2
+text = "some name"
+placeholder_text = "Choose a nickname!"
+max_length = 12
+
+[node name="Nickname Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 127.0
+offset_top = -21.0
+offset_right = 446.0
+offset_bottom = 21.0
+grow_vertical = 2
+text = "Nickname
+"
+label_settings = SubResource("LabelSettings_b3sac")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -2
+
+[node name="Sprite2D" type="Polygon2D" parent="CanvasLayer"]
+z_index = -2
+texture_filter = 5
+texture_repeat = 2
+position = Vector2(112, 111.57)
+texture = ExtResource("6_nhdoc")
+polygon = PackedVector2Array(-1808, -1111.57, 2744, -1383.57, 3416, 2176.43, -1904, 2144.43)
+script = ExtResource("7_fuxb6")
+speed = 40.0
+
+[node name="Sprite2D2" type="Polygon2D" parent="CanvasLayer"]
+z_index = -2
+texture_filter = 5
+texture_repeat = 2
+position = Vector2(112, 111.57)
+color = Color(0.438277, 0.438277, 0.438277, 1)
+texture = ExtResource("8_lt3hn")
+texture_scale = Vector2(1.295, 1.295)
+polygon = PackedVector2Array(-1656, -1311.57, 2400, -1007.57, 2512, 1752.43, -1448, 1512.43)
+script = ExtResource("7_fuxb6")
+speed = 20.0
+
+[connection signal="pressed" from="Code Field/Host Button" to="." method="_host_button_pressed"]
+[connection signal="pressed" from="Code Field/Join Button" to="." method="_join_button_pressed"]
+[connection signal="color_changed" from="Ship Color" to="Sprites" method="set_main_color"]
+[connection signal="color_changed" from="Ship Color 2" to="Sprites" method="set_secondary_color"]

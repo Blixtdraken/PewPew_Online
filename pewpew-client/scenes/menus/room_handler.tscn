@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://cyfo40jke653h"]
+
+[ext_resource type="Script" path="res://scripts/Menu/room_handler.gd" id="1_hu2g2"]
+[ext_resource type="PackedScene" uid="uid://bcu5wk1ctyb70" path="res://scenes/menus/room_request_menu.tscn" id="2_2nqki"]
+
+[node name="Room Handler" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hu2g2")
+metadata/_edit_use_anchors_ = true
+
+[node name="Room Request Menu" parent="." instance=ExtResource("2_2nqki")]
+layout_mode = 1

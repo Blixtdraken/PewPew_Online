@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://d1pcj85rjejun"]
+
+[ext_resource type="Script" path="res://scripts/laser.gd" id="1_3dmir"]
+
+[sub_resource type="Gradient" id="Gradient_axsjx"]
+colors = PackedColorArray(0.86, 0, 0, 1, 1, 0.31, 0.31, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6kduy"]
+gradient = SubResource("Gradient_axsjx")
+width = 4
+fill_from = Vector2(0.5, 0)
+fill_to = Vector2(0.5, 1)
+metadata/_snap_enabled = true
+metadata/_snap_count = 2
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tca7x"]
+size = Vector2(5, 30)
+
+[node name="Laser" type="Node2D"]
+script = ExtResource("1_3dmir")
+laser_speed = 2000.0
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(4, 4)
+texture = SubResource("GradientTexture2D_6kduy")
+
+[node name="Life Timer" type="Timer" parent="."]
+wait_time = 8.0
+one_shot = true
+autostart = true
+
+[node name="Area2D" type="Area2D" parent="."]
+scale = Vector2(4, 4)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -17)
+shape = SubResource("RectangleShape2D_tca7x")
+
+[connection signal="timeout" from="Life Timer" to="." method="_delete_timeout"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
