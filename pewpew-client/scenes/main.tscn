@@ -18,8 +18,8 @@ font_color = Color(1, 1, 0, 1)
 [sub_resource type="Environment" id="Environment_ktlak"]
 background_mode = 3
 glow_enabled = true
-glow_intensity = 8.0
-glow_bloom = 0.1
+glow_intensity = 1.81
+glow_bloom = 0.34
 
 [node name="Main" type="Node"]
 script = ExtResource("1_387bm")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cuee081b0ptvm"]
+[gd_scene load_steps=13 format=3 uid="uid://cuee081b0ptvm"]
 
 [ext_resource type="Script" path="res://scripts/game_room.gd" id="1_hpl24"]
 [ext_resource type="Script" path="res://scripts/camera_follow.gd" id="2_71j8f"]
@@ -25,12 +25,6 @@ fill_from = Vector2(0.545455, 1)
 fill_to = Vector2(0.545455, 0)
 metadata/_snap_enabled = true
 metadata/_snap_count = 11
-
-[sub_resource type="Shader" id="Shader_shhnv"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_y4o04"]
-render_priority = 0
-shader = SubResource("Shader_shhnv")
 
 [node name="Game Room" type="Node2D"]
 script = ExtResource("1_hpl24")
@@ -189,7 +183,6 @@ visible = false
 script = ExtResource("8_b2vcu")
 
 [node name="ColorRect" type="ColorRect" parent="Pause Menu"]
-material = SubResource("ShaderMaterial_y4o04")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
