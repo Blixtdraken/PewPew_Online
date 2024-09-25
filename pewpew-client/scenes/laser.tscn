@@ -7,23 +7,24 @@ colors = PackedColorArray(0.86, 0, 0, 1, 1, 0.31, 0.31, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_6kduy"]
 gradient = SubResource("Gradient_axsjx")
-width = 1
-height = 16
+width = 2
+height = 32
 fill_from = Vector2(0.5, 0)
 fill_to = Vector2(0.5, 1)
 metadata/_snap_enabled = true
 metadata/_snap_count = 2
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tca7x"]
-size = Vector2(2, 6)
+size = Vector2(3, 7)
 
 [node name="Laser" type="Node2D"]
 script = ExtResource("1_3dmir")
-laser_speed = 2000.0
+laser_speed = 5000.0
 
 [node name="Sprite" type="Sprite2D" parent="."]
 texture_filter = 1
-scale = Vector2(4, 4)
+position = Vector2(2, -54)
+scale = Vector2(4, 5.625)
 texture = SubResource("GradientTexture2D_6kduy")
 
 [node name="Life Timer" type="Timer" parent="."]
