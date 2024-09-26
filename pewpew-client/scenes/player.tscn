@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://b77fxwrp0q7t1"]
+[gd_scene load_steps=15 format=3 uid="uid://b77fxwrp0q7t1"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_sjcll"]
 [ext_resource type="Script" path="res://scripts/inverse_rotation.gd" id="2_qoowp"]
 [ext_resource type="Script" path="res://scripts/player_sprites.gd" id="4_don2s"]
 [ext_resource type="Texture2D" uid="uid://cpfb2p6yosuh" path="res://textures/player/player_shell.png" id="4_y3u62"]
 [ext_resource type="Texture2D" uid="uid://emlawk1ne7qh" path="res://textures/player/player_main.png" id="6_45cq4"]
+[ext_resource type="Script" path="res://scenes/line_2d.gd" id="7_24m3n"]
 [ext_resource type="Texture2D" uid="uid://ce3rqpe2d1srf" path="res://textures/player/player_second.png" id="7_erw3i"]
 
 [sub_resource type="Gradient" id="Gradient_acsi1"]
@@ -30,11 +31,19 @@ height = 128
 fill = 1
 fill_from = Vector2(0.471795, 0.446154)
 
+[sub_resource type="Curve" id="Curve_wf65k"]
+_data = [Vector2(0.0932722, 0.764186), 0.0, 0.0, 0, 0, Vector2(1, 0.244186), -3.87688, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_f8ao5"]
+colors = PackedColorArray(1, 0.41, 0.419833, 0.984314, 1, 1, 1, 0)
+
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 3
 wall_min_slide_angle = 3.14159
 script = ExtResource("1_sjcll")
 ignore_inout_without_focus = false
+acceleration = 0.9
 max_speed = 1500.0
 break_force = 4.0
 
@@ -95,7 +104,7 @@ texture = SubResource("GradientTexture2D_3k3ov")
 polygon = PackedVector2Array(-8, -40, 8, -40, 32, 24, 32, 40, -32, 40, -32, 24)
 
 [node name="Laser Cooldown" type="Timer" parent="."]
-wait_time = 0.5
+wait_time = 0.3
 one_shot = true
 
 [node name="Score Label" type="Label" parent="."]
@@ -116,6 +125,19 @@ text = "N/A"
 label_settings = SubResource("LabelSettings_gebx0")
 horizontal_alignment = 1
 script = ExtResource("2_qoowp")
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PackedVector2Array(120, 62, 46, 243, -121, 330, -257, 285, -378, 88, -309, -31)
+width_curve = SubResource("Curve_wf65k")
+gradient = SubResource("Gradient_f8ao5")
+joint_mode = 2
+begin_cap_mode = 2
+round_precision = 32
+antialiased = true
+script = ExtResource("7_24m3n")
+
+[node name="Drawer" type="Node2D" parent="."]
+position = Vector2(0, 40)
 
 [connection signal="timeout" from="Sync Timer" to="." method="_sync_timer_timeout"]
 [connection signal="timeout" from="Laser Cooldown" to="." method="_laser_cooled_down"]
