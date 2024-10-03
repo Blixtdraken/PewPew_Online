@@ -16,15 +16,25 @@ func _process(delta: float) -> void:
 	pass
 	
 @rpc("authority", "unreliable_ordered")
-func _send_player_data(position_data:Vector2,rotation_data:float):
+func _send_player_data(
+position_data:Vector2, 
+rotation_data:float, 
+velocity_data:Vector2,
+rotation_delta:float
+):
 	var sender:int = multiplayer.get_remote_sender_id()
 	for player in game_room.player_list:
 		if player != sender:
-			_sync_player_data.rpc_id(player, position_data,rotation_data)
+			_sync_player_data.rpc_id(player, position_data,rotation_data, velocity_data, rotation_delta)
 	pass
 
 @rpc("any_peer", "unreliable_ordered")
-func _sync_player_data(position_data:Vector2,rotation_data:float):
+func _sync_player_data(
+position_data:Vector2, 
+rotation_data:float, 
+velocity_data:Vector2,
+rotation_delta:float
+):
 	pass
 
 @rpc("authority", "reliable")

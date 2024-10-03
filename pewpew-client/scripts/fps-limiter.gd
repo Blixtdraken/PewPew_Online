@@ -12,7 +12,7 @@ func _process(delta: float) -> void:
 	
 
 func _on_toggled(toggled_on: bool) -> void:
-	print(toggled_on)
+	#print(toggled_on)
 	if toggled_on == true:
 		Engine.max_fps = 10
 	else:

@@ -45,7 +45,7 @@ func _set_local_color(color:Color):
 	pass
 func _set_local_second_color(color:Color):
 	local_second_color = color
-	print(local_second_color)
+	#print(local_second_color)
 	pass
 
 func _set_local_nickname(nickname:String):

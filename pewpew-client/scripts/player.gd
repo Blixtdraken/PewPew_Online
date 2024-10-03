@@ -25,6 +25,8 @@ var use_controller:bool = false
 var game_room:GameRoom = get_parent()
 
 var score
+
+var rotation_velocity = 0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	(get_node("Sprites") as PlayerSprites).set_main_color(ship_color)
@@ -42,10 +44,7 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 
-func _sync_timer_timeout():
-	if not debug:
-		_send_player_data.rpc_id(1,position,rotation)
-	pass
+
 @export
 var acceleration:float = 1
 @export
@@ -72,8 +71,10 @@ func _process(delta: float) -> void:
 		
 		if window.has_focus() or ignore_inout_without_focus:
 			if look_at_vector != Vector2(0,0) and use_controller:
+				last_rotation = rotation
 				rotation = -look_at_vector.angle() + deg_to_rad(90)
 			elif not use_controller:
+				last_rotation = rotation
 				rotation = position.direction_to(get_global_mouse_position()).angle() + deg_to_rad(90)
 				
 			var forward_dir:Vector2 = -transform.y
@@ -110,6 +111,9 @@ func _process(delta: float) -> void:
 		
 		move_and_slide()
 		get_node("/root/Main/Debug UI/Debug Menu/Vel Label").text = "Vel: " + str(velocity.length() as int)
+	else:
+		#rotation += rotation_velocity
+		move_and_slide()
 	#position = position.clamp(Vector2(-5000,-5000),Vector2(5000,5000))
 	pass
 var laser_overheated:bool = false
@@ -156,19 +160,39 @@ func __send_shoot_laser(from_pos:Vector2, angle:float):
 func __sync_shoot_laser(from_pos:Vector2, angle:float):
 	shoot_laser(from_pos, angle)
 	pass
+
+var last_rotation:float = 0
+func _sync_timer_timeout():
+	if not debug:
+		_send_player_data.rpc_id(1,position,rotation,velocity,last_rotation-rotation)
+	pass
+	
 #Send player information for server to sync with other players
 @rpc("authority", "unreliable_ordered")
-func _send_player_data(position_data:Vector2, rotation_data:float):
+func _send_player_data(
+position_data:Vector2, 
+rotation_data:float, 
+velocity_data:Vector2,
+rotation_delta:float
+):
 	pass
 
 #The rpc call tha receives the player information and proccesses it
 @rpc("any_peer", "unreliable_ordered")
-func _sync_player_data(position_data:Vector2, rotation_data:float):
+func _sync_player_data(
+position_data:Vector2, 
+rotation_data:float, 
+velocity_data:Vector2,
+rotation_delta:float
+):
 	if multiplayer.get_remote_sender_id() != 1:
 		return
 	
 	position = position_data
 	rotation = rotation_data
+	velocity = velocity_data
+	rotation_velocity = rotation_delta
+	
 	pass
 
 @rpc("authority","reliable")
@@ -177,8 +201,8 @@ func __send_laser_hit(victim_uuid:int):
 	
 @rpc("any_peer", "reliable")
 func __sync_laser_hit(shooter_uuid:int, victim_uuid:int):
-	if multiplayer.get_remote_sender_id() == 1:
-		print("[" + name + "] " + str(shooter_uuid) + " hit " + str(victim_uuid))
+	#if multiplayer.get_remote_sender_id() == 1:
+		#print("[" + name + "] " + str(shooter_uuid) + " hit " + str(victim_uuid))
 	pass
 
 @onready
