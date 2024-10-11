@@ -29,7 +29,8 @@ var score
 var rotation_velocity = 0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	(get_node("Sprites") as PlayerSprites).set_main_color(ship_color)
+	sprites.set_main_color(ship_color)
+	sprites.material = sprites.material.duplicate()
 	(get_node("Sprites") as PlayerSprites).set_secondary_color(ship_second_color)
 	(get_node("Nickname") as Label).text = nickname
 	score_label.text = str(score)
@@ -42,7 +43,19 @@ func _ready() -> void:
 	else:
 		get_node("./Sync Timer").queue_free()
 	pass # Replace with function body.
-
+	var line_node:Line2D = (get_node("Trail") as Line2D)
+	line_node.gradient = line_node.gradient.duplicate(true)
+	var trail_gradient:Gradient = line_node.gradient
+	#laser_gradient.generate_scene_unique_id()
+	var trail_color = ship_color
+	var color_vector = Vector3(trail_color.r+0.001,trail_color.g,trail_color.b)
+	color_vector = color_vector.normalized()
+	trail_color = Color(color_vector.x, color_vector.y, color_vector.z)
+	trail_color.a = 1
+	line_node.gradient.set_color(0, trail_color)
+	trail_color = ship_second_color
+	trail_color.a = 0
+	line_node.gradient.set_color(1, trail_color)
 
 
 @export
@@ -53,6 +66,8 @@ var max_speed:float = 1000
 var break_force:float = 5
 #var acceleration:Vector2 = Vector2()
 # Called every frame. 'delta' is the elapsed time since the previous frame.
+@onready
+var sprites:PlayerSprites = (get_node("Sprites") as PlayerSprites)
 func _process(delta: float) -> void:
 	
 	if get_multiplayer_authority() == multiplayer.get_unique_id() or debug:
@@ -112,8 +127,12 @@ func _process(delta: float) -> void:
 		move_and_slide()
 		get_node("/root/Main/Debug UI/Debug Menu/Vel Label").text = "Vel: " + str(velocity.length() as int)
 	else:
+		
+		pass
+	var mat:ShaderMaterial = sprites.material
+	#mat.set_shader_parameter("dir", -(velocity/5000).rotated(-rotation)	)
 		#rotation += rotation_velocity
-		move_and_slide()
+		#move_and_slide()
 	#position = position.clamp(Vector2(-5000,-5000),Vector2(5000,5000))
 	pass
 var laser_overheated:bool = false
@@ -145,6 +164,8 @@ func shoot_laser(from_pos:Vector2, angle:float):
 		laser_color.a = 0
 		laser_gradient.gradient.set_color(1, laser_color)
 		 
+		
+		
 		#print(self)
 		get_parent().add_child(laser_instance)
 

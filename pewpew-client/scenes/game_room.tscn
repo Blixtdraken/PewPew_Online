@@ -57,7 +57,7 @@ grow_vertical = 2
 [node name="Game Area" type="Node2D" parent="."]
 texture_filter = 5
 script = ExtResource("3_x60lw")
-game_area_size = Vector2(10000, 10000)
+game_area_size = Vector2(4000, 4000)
 
 [node name="Background" type="Polygon2D" parent="Game Area"]
 self_modulate = Color(0.751461, 0.751461, 0.751461, 1)

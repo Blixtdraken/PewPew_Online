@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://dym3bw7v125f6" path="res://textures/starry_night_nobackground_.png" id="8_lt3hn"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_60tp1"]
-font_size = 35
+font_size = 25
 
 [sub_resource type="LabelSettings" id="LabelSettings_b3sac"]
 font_size = 20
@@ -71,14 +71,18 @@ text = "Join
 modulate = Color(1, 0, 0, 1)
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 8.613
-offset_left = -128.0
-offset_top = 193.0
-offset_right = 144.0
-offset_bottom = 29.997
+anchor_left = 0.905
+anchor_top = -6.0
+anchor_right = 0.905
+anchor_bottom = -6.0
+offset_left = -279.925
+offset_top = 440.0
+offset_right = 277.075
+offset_bottom = 519.0
 grow_horizontal = 2
 grow_vertical = 2
+text = "dnalksdnas
+dsadas"
 label_settings = SubResource("LabelSettings_60tp1")
 horizontal_alignment = 1
 

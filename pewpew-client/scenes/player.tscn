@@ -6,18 +6,18 @@
 [ext_resource type="Texture2D" uid="uid://cpfb2p6yosuh" path="res://textures/player/player_shell.png" id="4_y3u62"]
 [ext_resource type="Texture2D" uid="uid://emlawk1ne7qh" path="res://textures/player/player_main.png" id="6_45cq4"]
 [ext_resource type="Script" path="res://scenes/line_2d.gd" id="7_24m3n"]
+[ext_resource type="Shader" path="res://scenes/test.gdshader" id="7_debxi"]
 [ext_resource type="Texture2D" uid="uid://ce3rqpe2d1srf" path="res://textures/player/player_second.png" id="7_erw3i"]
-
-[sub_resource type="Gradient" id="Gradient_acsi1"]
-colors = PackedColorArray(1, 0, 1, 1, 1, 0, 1, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_bqcoo"]
-gradient = SubResource("Gradient_acsi1")
-width = 612
-height = 512
 
 [sub_resource type="LabelSettings" id="LabelSettings_gebx0"]
 font_color = Color(1, 1, 1, 0.811765)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0l8ta"]
+shader = ExtResource("7_debxi")
+shader_parameter/dir = Vector2(0, 0)
+shader_parameter/offset = Vector2(0, 0)
+shader_parameter/quality = 64
+shader_parameter/alpha_mult = 1.0
 
 [sub_resource type="Gradient" id="Gradient_1x55e"]
 interpolation_mode = 2
@@ -47,21 +47,6 @@ acceleration = 0.9
 max_speed = 1500.0
 break_force = 4.0
 
-[node name="Ship" type="Polygon2D" parent="."]
-visible = false
-color = Color(0.919326, 0.84855, 1, 1)
-texture = SubResource("GradientTexture2D_bqcoo")
-texture_offset = Vector2(256, 256)
-invert_border = 70.5
-polygon = PackedVector2Array(0, -32, -24, 32, 0, 24, 24, 32)
-uv = PackedVector2Array(0, -32, -24, 32, 0, 24, 24, 32)
-
-[node name="Outline" type="Polygon2D" parent="Ship"]
-visible = false
-z_index = -1
-color = Color(1, 0, 1, 1)
-polygon = PackedVector2Array(0, -40, -28, 36, 0, 28, 28, 36)
-
 [node name="Nickname" type="Label" parent="."]
 z_index = 20
 offset_left = -80.0
@@ -75,23 +60,27 @@ horizontal_alignment = 1
 script = ExtResource("2_qoowp")
 
 [node name="Sync Timer" type="Timer" parent="."]
-wait_time = 0.075
+wait_time = 0.01
 
 [node name="Sprites" type="CanvasModulate" parent="."]
 z_index = 1
+material = SubResource("ShaderMaterial_0l8ta")
 scale = Vector2(5, 5)
 script = ExtResource("4_don2s")
 
 [node name="Main" type="Sprite2D" parent="Sprites"]
 texture_filter = 1
+use_parent_material = true
 texture = ExtResource("6_45cq4")
 
 [node name="Secondary" type="Sprite2D" parent="Sprites"]
 texture_filter = 1
+use_parent_material = true
 texture = ExtResource("7_erw3i")
 
 [node name="Shell" type="Sprite2D" parent="Sprites"]
 texture_filter = 1
+use_parent_material = true
 texture = ExtResource("4_y3u62")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
@@ -127,7 +116,8 @@ horizontal_alignment = 1
 script = ExtResource("2_qoowp")
 
 [node name="Trail" type="Line2D" parent="."]
-points = PackedVector2Array(120, 62, 46, 243, -121, 330, -257, 285, -378, 88, -309, -31)
+texture_repeat = 2
+points = PackedVector2Array(0, 0, 0, 0)
 width = 30.0
 width_curve = SubResource("Curve_wf65k")
 gradient = SubResource("Gradient_f8ao5")
